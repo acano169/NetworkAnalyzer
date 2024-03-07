@@ -1,0 +1,12 @@
+C:\Users\acano\source\repos\NetworkSniffer\bin\Debug\NetworkAnalyzer.exe.config
+C:\Users\acano\source\repos\NetworkSniffer\bin\Debug\NetworkAnalyzer.exe
+C:\Users\acano\source\repos\NetworkSniffer\bin\Debug\NetworkAnalyzer.pdb
+C:\Users\acano\source\repos\NetworkSniffer\obj\Debug\NetworkAnalyzer.csproj.AssemblyReference.cache
+C:\Users\acano\source\repos\NetworkSniffer\obj\Debug\NetworkSniffer.AnalizadorUserControl.resources
+C:\Users\acano\source\repos\NetworkSniffer\obj\Debug\NetworkSniffer.Base.resources
+C:\Users\acano\source\repos\NetworkSniffer\obj\Debug\NetworkSniffer.InicioUserControl.resources
+C:\Users\acano\source\repos\NetworkSniffer\obj\Debug\NetworkAnalyzer.Properties.Resources.resources
+C:\Users\acano\source\repos\NetworkSniffer\obj\Debug\NetworkAnalyzer.csproj.GenerateResource.cache
+C:\Users\acano\source\repos\NetworkSniffer\obj\Debug\NetworkAnalyzer.csproj.CoreCompileInputs.cache
+C:\Users\acano\source\repos\NetworkSniffer\obj\Debug\NetworkAnalyzer.exe
+C:\Users\acano\source\repos\NetworkSniffer\obj\Debug\NetworkAnalyzer.pdb
