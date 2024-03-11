@@ -17,10 +17,33 @@ namespace NetworkSniffer
 
         private bool ValidIP = false;
         private string IPAddressString;
+        private IPAddress IPAddress;
+        private string IPAddressBinary;
 
         public AnalizadorUserControl()
         {
             InitializeComponent();
+
+            this.IPTextBox1.KeyPress += this.IPTextBox_KeyPress;
+            this.IPTextBox1.PreviewKeyDown += this.IPTextBox_PreviewKeyDown;
+            this.IPTextBox1.KeyDown += this.IPTextBox_KeyDown;
+            this.IPTextBox1.TextChanged += this.IPTextBox_TextChanged;
+
+            this.IPTextBox2.KeyPress += this.IPTextBox_KeyPress;
+            this.IPTextBox2.PreviewKeyDown += this.IPTextBox_PreviewKeyDown;
+            this.IPTextBox2.KeyDown += this.IPTextBox_KeyDown;
+            this.IPTextBox2.TextChanged += this.IPTextBox_TextChanged;
+
+            this.IPTextBox3.KeyPress += this.IPTextBox_KeyPress;
+            this.IPTextBox3.PreviewKeyDown += this.IPTextBox_PreviewKeyDown;
+            this.IPTextBox3.KeyDown += this.IPTextBox_KeyDown;
+            this.IPTextBox3.TextChanged += this.IPTextBox_TextChanged;
+
+            this.IPTextBox4.KeyPress += this.IPTextBox_KeyPress;
+            this.IPTextBox4.PreviewKeyDown += this.IPTextBox_PreviewKeyDown;
+            this.IPTextBox4.KeyDown += this.IPTextBox_KeyDown;
+            this.IPTextBox4.TextChanged += this.IPTextBox_TextChanged;
+
         }
 
         private void Back_Click(object sender, EventArgs e)
@@ -32,10 +55,71 @@ namespace NetworkSniffer
             }
         }
 
+        private void IPTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Down:
+                case Keys.Right:
+                case Keys.Left:
+                case Keys.Up:
+                    e.IsInputKey = true;
+                    break;
+            }
+        }
+
         private void IPTextBox_KeyDown(object sender, KeyEventArgs e)
         {
+            Keys pressedKey = e.KeyData;
+            TextBox currentTextBox = (TextBox)sender;
 
-            if ((!char.IsControl(((char)e.KeyData)) && ((char)e.KeyValue) != ((char)Keys.Left) && ((char)e.KeyValue) != ((char)Keys.Right)) && !char.IsDigit(((char)e.KeyData)))
+
+            if (currentTextBox.SelectionStart == 0 && (pressedKey == Keys.Left || pressedKey == Keys.Back))
+            {
+                MoveFocusToPreviousTextBox(currentTextBox);
+                e.Handled = true;
+            }
+            else if (pressedKey == Keys.Return || pressedKey == Keys.OemPeriod || (currentTextBox.SelectionStart == currentTextBox.Text.Length && pressedKey == Keys.Right))
+            {
+                MoveFocusToNextTextBox(currentTextBox);
+                e.Handled = true;
+            }
+        }
+
+        private void MoveFocusToPreviousTextBox(TextBox currentTextBox)
+        {
+            int previousTabIndex = currentTextBox.TabIndex - 1;
+            MoveFocusToTextBoxByTabIndex(previousTabIndex);
+        }
+
+        private void MoveFocusToNextTextBox(TextBox currentTextBox)
+        {
+            int nextTabIndex = currentTextBox.TabIndex + 1;
+            MoveFocusToTextBoxByTabIndex(nextTabIndex);
+        }
+
+        private void MoveFocusToTextBoxByTabIndex(int tabIndex)
+        {
+            var textBoxes = new Dictionary<int, TextBox>
+            {
+                { 1, IPTextBox1 },
+                { 2, IPTextBox2 },
+                { 3, IPTextBox3 },
+                { 4, IPTextBox4 }
+            };
+
+            if (textBoxes.TryGetValue(tabIndex, out var nextTextBox))
+            {
+                nextTextBox.SelectAll();
+                nextTextBox.Focus();
+            }
+        }
+
+        private void IPTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char pressedKey = (char)e.KeyChar;
+
+            if (char.IsLetter(pressedKey) || pressedKey == ' ' || (!char.IsControl(pressedKey) && !char.IsDigit(pressedKey)))
             {
                 e.Handled = true;
                 return;
@@ -43,49 +127,25 @@ namespace NetworkSniffer
 
             TextBox TextBoxSender = (TextBox)sender;
 
-            if (TextBoxSender.Text.Length > 0 && TextBoxSender.Text.Length == 2)
+            if (char.IsDigit(pressedKey)) 
             {
-                if (Char.IsDigit(((char)e.KeyValue))) {
-                    if (int.Parse(TextBoxSender.Text + ((char)e.KeyValue)) > 255)
+                TextBoxSender.Text = TextBoxSender.Text.TrimStart('0');
+
+                if (TextBoxSender.Text.Length > 0 && TextBoxSender.Text.Length == 2)
+                {
+
+                    if (int.Parse(TextBoxSender.Text + pressedKey) > 255)
                     {
                         TextBoxSender.Text = "255";
+                        TextBoxSender.SelectionStart = 3;
                     }
-                    SendKeys.Send("{Tab}");
+
+                    if (TextBoxSender.TabIndex != 4)
+                    {
+                        SendKeys.Send("{Tab}");
+                    }
                 }
             }
-            if (TextBoxSender.SelectionStart == 0 && (((char)e.KeyValue) == ((char)Keys.Left) || ((char)e.KeyValue) == ((char)Keys.Back)))
-            {
-                int PreviousTextBox = TextBoxSender.TabIndex - 1;
-                switch (PreviousTextBox)
-                {
-                    case 1:
-                        IPTextBox1.Focus();
-                        break;
-                    case 2:
-                        IPTextBox2.Focus();
-                        break;
-                    case 3:
-                        IPTextBox3.Focus();
-                        break;
-                }
-            }
-            else if(((char)e.KeyValue) == ((char)Keys.Return) || (TextBoxSender.SelectionStart == TextBoxSender.Text.Length && ((char)e.KeyValue) == ((char)Keys.Right)))
-            {
-                int PreviousTextBox = TextBoxSender.TabIndex + 1;
-                switch (PreviousTextBox)
-                {
-                    case 2:
-                        IPTextBox2.Focus();
-                        break;
-                    case 3:
-                        IPTextBox3.Focus();
-                        break;
-                    case 4:
-                        IPTextBox4.Focus();
-                        break;
-                }
-            }
-            ParseIPAdress();
         }
 
         private void IPTextBox_TextChanged(object sender, EventArgs e)
@@ -96,7 +156,25 @@ namespace NetworkSniffer
         private void ParseIPAdress()
         {
             IPAddressString = IPTextBox1.Text + "." + IPTextBox2.Text + "." + IPTextBox3.Text + "." + IPTextBox4.Text;
-            ValidIP = IPAddress.TryParse(IPAddressString, out _);
+            ValidIP = IPAddress.TryParse(IPAddressString, out IPAddress);
+            if (ValidIP) 
+            {
+                this.ValidIPLabel.Text = IPAddressString;
+                IPAddressBinary = this.IPStringToBinary(IPAddress);
+                this.label1.Text = IPAddressBinary;
+            } 
+            else
+            {
+                this.ValidIPLabel.Text = "IP no válida";
+            }
+        }
+
+        private String IPStringToBinary(IPAddress IPAddress) 
+        {
+            var IPAddressBytes = IPAddress
+                .GetAddressBytes()
+                .Select(number => Convert.ToString(number, 2).PadLeft(8, '0'));
+            return string.Join(".", IPAddressBytes);
         }
 
         private void AnalizadorUserControl_Load(object sender, EventArgs e)

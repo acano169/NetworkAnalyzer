@@ -22,6 +22,12 @@ namespace NetworkSniffer
             base.Dispose(disposing);
         }
 
+        public void StartFocus()
+        {
+            this.IPTextBox1.SelectAll();
+            this.IPTextBox1.Focus();
+        }
+
         #region Código generado por el Diseñador de componentes
 
         /// <summary> 
@@ -39,6 +45,8 @@ namespace NetworkSniffer
             this.IPTextBox3 = new System.Windows.Forms.TextBox();
             this.IPTextBox4 = new System.Windows.Forms.TextBox();
             this.IPInput = new System.Windows.Forms.Panel();
+            this.ValidIPLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.IPInput.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,7 +64,6 @@ namespace NetworkSniffer
             // IPTextBox1
             // 
             this.IPTextBox1.AcceptsTab = true;
-            this.IPTextBox1.KeyDown += this.IPTextBox_KeyDown;
             this.IPTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.IPTextBox1.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F);
             this.IPTextBox1.Location = new System.Drawing.Point(10, 3);
@@ -65,6 +72,7 @@ namespace NetworkSniffer
             this.IPTextBox1.ShortcutsEnabled = false;
             this.IPTextBox1.Size = new System.Drawing.Size(55, 30);
             this.IPTextBox1.TabIndex = 1;
+            this.IPTextBox1.Text = "0";
             this.IPTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PointLabel1
@@ -78,18 +86,6 @@ namespace NetworkSniffer
             this.PointLabel1.TabIndex = 6;
             this.PointLabel1.Text = ".";
             // 
-            // IPTextBox2
-            // 
-            this.IPTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.IPTextBox2.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F);
-            this.IPTextBox2.Location = new System.Drawing.Point(87, 3);
-            this.IPTextBox2.MaxLength = 3;
-            this.IPTextBox2.Name = "IPTextBox2";
-            this.IPTextBox2.ShortcutsEnabled = false;
-            this.IPTextBox2.Size = new System.Drawing.Size(55, 30);
-            this.IPTextBox2.TabIndex = 2;
-            this.IPTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // PointLabel2
             // 
             this.PointLabel2.AutoSize = true;
@@ -101,17 +97,18 @@ namespace NetworkSniffer
             this.PointLabel2.TabIndex = 8;
             this.PointLabel2.Text = ".";
             // 
-            // IPTextBox3
+            // IPTextBox2
             // 
-            this.IPTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.IPTextBox3.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F);
-            this.IPTextBox3.Location = new System.Drawing.Point(164, 3);
-            this.IPTextBox3.MaxLength = 3;
-            this.IPTextBox3.Name = "IPTextBox3";
-            this.IPTextBox3.ShortcutsEnabled = false;
-            this.IPTextBox3.Size = new System.Drawing.Size(55, 30);
-            this.IPTextBox3.TabIndex = 3;
-            this.IPTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.IPTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.IPTextBox2.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F);
+            this.IPTextBox2.Location = new System.Drawing.Point(87, 3);
+            this.IPTextBox2.MaxLength = 3;
+            this.IPTextBox2.Name = "IPTextBox2";
+            this.IPTextBox2.ShortcutsEnabled = false;
+            this.IPTextBox2.Size = new System.Drawing.Size(55, 30);
+            this.IPTextBox2.TabIndex = 2;
+            this.IPTextBox2.Text = "0";
+            this.IPTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PointLabel3
             // 
@@ -124,6 +121,19 @@ namespace NetworkSniffer
             this.PointLabel3.TabIndex = 10;
             this.PointLabel3.Text = ".";
             // 
+            // IPTextBox3
+            // 
+            this.IPTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.IPTextBox3.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F);
+            this.IPTextBox3.Location = new System.Drawing.Point(164, 3);
+            this.IPTextBox3.MaxLength = 3;
+            this.IPTextBox3.Name = "IPTextBox3";
+            this.IPTextBox3.ShortcutsEnabled = false;
+            this.IPTextBox3.Size = new System.Drawing.Size(55, 30);
+            this.IPTextBox3.TabIndex = 3;
+            this.IPTextBox3.Text = "0";
+            this.IPTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // IPTextBox4
             // 
             this.IPTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -134,6 +144,7 @@ namespace NetworkSniffer
             this.IPTextBox4.ShortcutsEnabled = false;
             this.IPTextBox4.Size = new System.Drawing.Size(55, 30);
             this.IPTextBox4.TabIndex = 4;
+            this.IPTextBox4.Text = "0";
             this.IPTextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // IPInput
@@ -151,10 +162,30 @@ namespace NetworkSniffer
             this.IPInput.Size = new System.Drawing.Size(306, 37);
             this.IPInput.TabIndex = 12;
             // 
+            // ValidIPLabel
+            // 
+            this.ValidIPLabel.AutoSize = true;
+            this.ValidIPLabel.Location = new System.Drawing.Point(230, 397);
+            this.ValidIPLabel.Name = "ValidIPLabel";
+            this.ValidIPLabel.Size = new System.Drawing.Size(57, 20);
+            this.ValidIPLabel.TabIndex = 13;
+            this.ValidIPLabel.Text = "0.0.0.0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(451, 365);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 20);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "label1";
+            // 
             // AnalizadorUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ValidIPLabel);
             this.Controls.Add(this.Back);
             this.Controls.Add(this.IPInput);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -164,6 +195,7 @@ namespace NetworkSniffer
             this.IPInput.ResumeLayout(false);
             this.IPInput.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -177,5 +209,7 @@ namespace NetworkSniffer
         private TextBox IPTextBox3;
         private TextBox IPTextBox4;
         private Panel IPInput;
+        private Label ValidIPLabel;
+        private Label label1;
     }
 }

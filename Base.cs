@@ -25,7 +25,12 @@ namespace NetworkSniffer
         public bool AnalizadorFormVisible
         {
             get { return AnalizadorForm.Visible; }
-            set { AnalizadorForm.Visible = value; UpdateFormSize(); }
+            set 
+            { 
+                AnalizadorForm.Visible = value;
+                AnalizadorForm.StartFocus();
+                UpdateFormSize(); 
+            }
         }
 
         private void UpdateFormSize()
